@@ -1,9 +1,11 @@
 package com.userapi.user.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Addresses")
+@Table(name = "addresses")
 public class Address {
 
     @Id
@@ -20,6 +22,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public Address() {}
@@ -44,6 +47,18 @@ public class Address {
         this.number = number;
         this.complement = complement;
         this.user = user;
+    }
+
+    public Address(Address entity) {
+        id = entity.getId();
+        cep = entity.getCep();
+        state = entity.getState();
+        city = entity.getCity();
+        district = entity.getDistrict();
+        street = entity.getStreet();
+        number = entity.getNumber();
+        complement = entity.getComplement();
+        user = entity.getUser();
     }
 
     public String getId() {

@@ -18,17 +18,27 @@ public class User {
     private String cpf;
     private LocalDate birthDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Address> addresses = new ArrayList<>();
 
-    public User() {}
+    public User () {}
 
-    public User(Long id, String name, String email, String cpf, LocalDate birthDate) {
+    public User(Long id, String name, String email, String cpf, LocalDate birthDate, List<Address> addresses) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpf = cpf;
         this.birthDate = birthDate;
+        this.addresses = addresses;
+    }
+
+    public User(User entity) {
+        id = entity.getId();
+        name = entity.getName();
+        email = entity.getEmail();
+        cpf = entity.getCpf();
+        birthDate = entity.getBirthDate();
+        addresses = entity.getAddresses();
     }
 
     public Long getId() {
