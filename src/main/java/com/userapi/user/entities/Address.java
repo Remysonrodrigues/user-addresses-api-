@@ -3,6 +3,8 @@ package com.userapi.user.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "addresses")
@@ -12,12 +14,32 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @NotBlank(message = "CEP não pode esta em branco.")
     private String cep;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Estado não pode esta em branco.")
     private String state;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Cidade não pode esta em branco.")
     private String city;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Bairro não pode esta em branco.")
     private String district;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Rua não pode esta em branco.")
     private String street;
+
+    @Column(nullable = false)
+    @NotNull(message = "Numero não pode esta em branco.")
     private Integer number;
+
+    @Column(nullable = false)
+    @NotBlank(message = "Complemento não pode esta em branco.")
     private String complement;
 
     @ManyToOne

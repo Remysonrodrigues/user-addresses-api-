@@ -1,6 +1,11 @@
 package com.userapi.user.entities;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.br.CPF;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +18,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    @NotBlank(message = "Nome não pode estar em branco.")
     private String name;
+
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "E-mail não pode estar em branco.")
+    @Email(message = "O E-mail deve ser valido.")
     private String email;
+
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "CPF não pode estar em branco.")
+    @CPF(message = "O CPF deve ser valido.")
     private String cpf;
+
+    @Column(nullable = false)
+    @NotNull(message = "Data de nascimento não pode estar em branco.")
     private LocalDate birthDate;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
