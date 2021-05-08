@@ -1,7 +1,10 @@
 package com.userapi.user.controller;
 
 import com.userapi.user.dto.MessageResponseDTO;
+import com.userapi.user.entities.Address;
 import com.userapi.user.entities.User;
+import com.userapi.user.exception.UserNotFoundException;
+import com.userapi.user.service.AddressService;
 import com.userapi.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,17 +18,29 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
+    @Autowired
+    private AddressService addressService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public MessageResponseDTO createUser(@RequestBody User user) {
-        return service.createUser(user);
+        return userService.createUser(user);
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = service.findAll();
-        return ResponseEntity.ok(list);
+    @PostMapping("/{id}/address")
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageResponseDTO createAddress(
+        @RequestBody Address address,
+        @PathVariable Long id
+    ) throws UserNotFoundException  {
+        User user = userService.findById(id);
+        return addressService.createAddress(user, address);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) throws UserNotFoundException {
+        User user = userService.findById(id);
+        return ResponseEntity.ok(user);
     }
 }

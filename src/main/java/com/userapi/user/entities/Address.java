@@ -10,7 +10,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String cep;
     private String state;
@@ -28,7 +28,7 @@ public class Address {
     public Address() {}
 
     public Address(
-            String id,
+            Long id,
             String cep,
             String state,
             String city,
@@ -61,11 +61,11 @@ public class Address {
         user = entity.getUser();
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
